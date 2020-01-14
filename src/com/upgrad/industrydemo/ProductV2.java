@@ -10,6 +10,7 @@ public class ProductV2 extends StorableWebObject {
     super(name);
     this.name = name;
     this.brand = brand;
+    generateUUID();
   }
   
   public String getName() {
@@ -31,7 +32,13 @@ public class ProductV2 extends StorableWebObject {
   /** Overriding the implementation of generateUUID **/
   @Override
   protected void generateUUID() {
-    this.uuid = this.brand.getUUID() + "-" + this.name.replaceAll(" ", "-");
+    //System.out.println("generateUUID of subclass called");
+    if(this.uuid == null) {
+      super.generateUUID();
+    }
+    if (this.brand != null) {
+      this.uuid = this.brand.getUUID() + "-" + this.uuid;
+    }
   }
 
   @Override
